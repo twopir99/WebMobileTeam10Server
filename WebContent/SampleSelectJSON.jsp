@@ -4,6 +4,12 @@
 <%@ page import="java.text.*"%>
 <%@ page import="javax.servlet.http.*"%>
 <%
+
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+	
+	String callBack = request.getParameter("callback");
+
    // Returns all data as json.
    response.setContentType("application/json");
    response.setHeader("Content-Disposition", "inline");
@@ -24,6 +30,7 @@ String variance="";
 String sd="";
  
 %>
+<%=callBack%>(
 [
 <%
 while(rs.next()) {
@@ -49,7 +56,7 @@ while(rs.next()) {
 } 
 %> 
 ]
-
+)
 <%
 
 rs.close();

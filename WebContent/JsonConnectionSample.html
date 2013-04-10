@@ -1,0 +1,60 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>   
+      <script>
+          $(document).ready(function(e) {
+            // JSON으로 플리커 피드 서비스 읽기
+            $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+                {
+                    tags: "cat",  // 고양이 키워드로 검색
+                    tagmode: "any",   // 모든 태그 읽기
+                    format: "json"    // feed 형식은 JSON으로 선언
+                },
+            function(data){                    
+                    $.each(data.items, function(i,item){
+                        // JSON으로 읽힌 정보를 하나씩 꺼내서 동적으로 목록 생성
+                        $("#result").append(
+                            "<li><a href='"+item.link+"'>" + 
+                            "<img src='"+item.media.m+  "' />" + 
+                            "<h3>" + item.title + "</h3>"+
+                            "<p>" + item.tags + "</p>"+
+                            "</a></li>");
+                            
+                        // JQM에게 동적 목록 표시 새로고침    
+                        $("#result").listview("refresh");
+                        
+                        // feed는 4개만 가져옴             
+                        if ( i == 4 ) return false;
+                    });
+            });
+        });
+
+      </script> 
+</head>
+
+<body>
+<div data-role="page" id="page">
+    <div data-role="header">
+        <h1>JSON으로 flickr 서비스연결하기</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+      <!-- 목록을 표시할 ul 특성 설정 -->    
+      <ul data-role="listview" data-inset="true" id="result">    </ul>     
+  </div><!-- /content -->
+
+    <div data-role="footer">
+        <h4>HMAPS.net</h4>
+    </div><!-- /footer -->
+</div>
+
+</body>
+</html>
