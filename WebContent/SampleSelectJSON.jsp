@@ -16,7 +16,8 @@
 %>
 <%
 Class.forName("com.mysql.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "twopir" , "twopir");
+//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "twopir" , "twopir");
+Connection conn = DriverManager.getConnection("jdbc:mysql://websys1.stern.nyu.edu:3306/websysS1310", "websysS1310" , "websysS1310!!");
 Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 ResultSet rs = null;
  
