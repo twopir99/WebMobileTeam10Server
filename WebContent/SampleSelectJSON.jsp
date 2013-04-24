@@ -7,6 +7,7 @@
 <%@ include file="./ConnectionHeader.jsp"%>
 
 <% 
+ResultSet rs = null;
 String query = "SELECT * FROM samples";
 rs = stmt.executeQuery(query);
 
@@ -44,5 +45,7 @@ while(rs.next()) {
 %> 
 ]
 )
-
+<%
+rs.close();
+%>
 <%@ include file="./CloseFooter.jsp"%>
