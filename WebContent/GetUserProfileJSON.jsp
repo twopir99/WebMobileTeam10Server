@@ -7,12 +7,12 @@
 <%@ include file="./ConnectionHeader.jsp"%>
 
 <% 
-String query = "SELECT * FROM user ";//userid should get from previous step
+String id = request.getParameter("userid");
+String query = "SELECT * FROM user where user_id = '" + id + "'";
 
 ResultSet rs = null;
 rs = stmt.executeQuery(query);
 
-String userid="";
 String password="";
 String name="";
 String level="";
@@ -27,7 +27,6 @@ String phonenumber="";
 [
 <%
 while(rs.next()) {
-	userid = rs.getString("user_id");
 	password = rs.getString("password");
 	name = rs.getString("name");
 	level = rs.getString("level");
@@ -38,15 +37,14 @@ while(rs.next()) {
 	phonenumber = rs.getString("phone_number");
 %>
 	{
-		"userid":"<%=userid %>",
 		"password":"<%=password %>",
-		"name":"<%=name %>"
+		"name":"<%=name %>",
 		"level":"<%=level %>",
 		"gender":"<%=gender %>",
-		"age":"<%=age %>"
+		"age":"<%=age %>",
 		"nationality":"<%=nationality %>",
 		"email":"<%=email %>",
-		"phonenumer":"<%=phonenumber %>"
+		"phonenumber":"<%=phonenumber %>"
 	}
 <%		
 	if(!rs.isLast()){
