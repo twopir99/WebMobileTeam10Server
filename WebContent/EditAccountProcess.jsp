@@ -21,21 +21,23 @@
 	
 	System.out.println("userid : " + userid);
 	System.out.println("password : " + password);
+	System.out.println("Edit Account Process");
 %>
 
 <% 
 
 String query = "Update user SET ";
-query = query + "'user_id'='" + userid + "',";
-query = query + "'password'='" + password + "',";
-query = query + "'name'='" + name + "',";
-query = query + "'level'='" + level + "',";
-query = query + "'gender'='" + gender + "',";
-query = query + "'age'='" + age + "',";
-query = query + "'nationality'='" + nationality + "',";
-query = query + "'email'='" + email + "',";
-query = query + "'phone_number'='" + phonenumber;
-
+query = query + "user_id='" + userid + "',";
+query = query + "password='" + password + "',";
+query = query + "name='" + name + "',";
+query = query + "level='" + level + "',";
+query = query + "gender='" + gender + "',";
+query = query + "age='" + age + "',";
+query = query + "nationality='" + nationality + "',";
+query = query + "email='" + email + "',";
+query = query + "phone_number='" + phonenumber +"'";
+query = query + " where user_id = '" + userid + "'";
+System.out.println("query ::: " + query);
 int rscnt = 0;
 rscnt = stmt.executeUpdate(query);
 
