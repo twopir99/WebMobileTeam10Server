@@ -4,6 +4,7 @@
 <%@ page import="java.text.*"%>
 <%@ page import="javax.servlet.http.*"%>
 <%@ page import="org.json.*" %>
+<%@ page import="schedule.*"%>
 
 <%@ include file="./ConnectionHeader.jsp"%>
 
@@ -50,7 +51,7 @@ while(rs.next()){
 %>
 
 <% 
-String query = "Insert into schedule (schedule_id, user_id, date, timeslot_start, timeslot_end, gender, nationality, double_yn, status, status_push, status_mail) ";
+String query = "Insert into schedule (schedule_id, user_id, date, timeslot_start, timeslot_end, gender, nationality, double_yn, status, status_push, status_mail, create_date, mod_date) ";
 query = query + "select get_next_seq_val('schedule'), ";
 query = query + "'"+userid+"', ";
 query = query + "'"+date+"', ";
@@ -61,7 +62,9 @@ query = query + "'"+nationality+"', ";
 query = query + "'"+double_yn+"', ";
 query = query + "'"+status+"', ";
 query = query + "'"+status_push+"', ";
-query = query + "'"+status_mail+"' ";
+query = query + "'"+status_mail+"', ";
+query = query + "now(), ";
+query = query + "now() ";
 System.out.println("INSERT INTO SCHEDULE :: "+query);
 int rscnt = 0;
 rscnt = stmt.executeUpdate(query);
@@ -129,5 +132,24 @@ out.flush();
 %> 
 
 )
+
+<%-- call bean functions  --%>
+<%
+	HashMap<String, Object> umap = new HashMap<String, Object>();
+	umap.put("userid", userid);
+	umap.put("date", date);
+	umap.put("timestart", timestart);
+	umap.put("timeend", timeend);
+	umap.put("gender", gender);
+	umap.put("nationality", nationality);
+	umap.put("double_yn", double_yn);
+	umap.put("status", status);
+	umap.put("agearr", agearr);
+	umap.put("levelarr", levelarr);
+	
+	MatchingProcessBean matchingProcess = new MatchingProcessBean();
+	matchingProcess.getMatch(umap);
+	
+%>
 
 <%@ include file="./CloseFooter.jsp"%>
