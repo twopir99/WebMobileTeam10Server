@@ -7,15 +7,19 @@
 <%@ include file="./ConnectionHeader.jsp"%>
 
 <% 
-String userid = request.getParameter("userid");
-userid="aa";
-String query = "SELECT * FROM schedule where user_id = '" + userid + "'";
+String scheduleid = request.getParameter("scheduleid");
+String matchid = request.getParameter("matchid");
+scheduleid="13";
+matchid="1";
+System.out.println("scheduleid for json " + scheduleid);
+String query = "SELECT * FROM schedule where schedule_id = '" + scheduleid + "'";
 System.out.println(query);
 
 ResultSet rs = null;
 rs = stmt.executeQuery(query);
 
-String scheduleid="";
+
+
 String date="";
 String timestart="";
 String timeend="";
@@ -27,7 +31,7 @@ String type="";
 String status="";
 String statuspush="";
 String statusmail="";
-String matchid="";
+String puserid="";
 
 int i=0;
  
@@ -36,7 +40,6 @@ int i=0;
 [
 <%
 while(rs.next()) {
-	scheduleid=rs.getString("schedule_id");
 	date = rs.getString("date");
 	timestart = rs.getString("timeslot_start");
 	timeend = rs.getString("timeslot_end");
@@ -46,10 +49,9 @@ while(rs.next()) {
 	status = rs.getString("status");
 	statuspush = rs.getString("status_push");
 	statusmail = rs.getString("status_mail");
-	matchid = rs.getString("match_result_id");
+	
 %>
 	{
-		"scheduleid":"<%=scheduleid %>",
 		"date":"<%=date %>",
 		"timestart":"<%=timestart %>",
 		"timeend":"<%=timeend %>",
@@ -59,7 +61,15 @@ while(rs.next()) {
 		"status":"<%=status %>",
 		"statuspush":"<%=statuspush %>",
 		"statusmail":"<%=statusmail %>",
-		"matchid":"<%=matchid %>",	
+<%
+String querymatch = "SELECT user_id FROM schedule where match_result_id = '" + matchid + "'";
+ResultSet rs1 = null;
+rs1 = stmt1.executeQuery(querymatch);
+while(rs1.next()){
+	puserid=rs1.getString("user_id");
+}
+%>
+		"puserid":"<%=puserid %>",
 <%
 	String queryl = "SELECT * FROM schedule_level where schedule_id = '" + scheduleid + "'";
 	System.out.println(queryl);
